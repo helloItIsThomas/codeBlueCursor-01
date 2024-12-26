@@ -1,0 +1,5 @@
+
+
+if the mouse velocity is higher than a given threshold,
+create new particles.
+particles are instantiated in a ring at the mouse position, and move outwards from it.

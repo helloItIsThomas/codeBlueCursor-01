@@ -1,0 +1,23 @@
+
+
+we have a total triangle count.
+each triangle moves outward from the origin.
+the origin is the mouse position.
+
+I want to instantiate a triangle at a given mouse position,
+then have it's origin pinned at that position, until it reaches the radius value.
+
+i think we need to have some concept of what an instantiation is, 
+since we always have a set number of triangles.
+Instantiation is when the radius value wraps back to 0.
+
+maybe we have a max number,
+and that max number defines the size of instancePositionBuffer and alphaBuffer.
+
+Then we have a way to determine if triangles are active or not.
+if they are not active, they are at the origin and have an alpha value of 0.
+When they are instantiated, they are activated and animate until they reach the radius,
+then they are de-activated.
+
+They are acitvated when the mouse velocity is above a certain threshold.
+But, for now, we can activate them on mouse press.
