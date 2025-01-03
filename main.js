@@ -27,7 +27,7 @@ import { render } from "./script/render.js";
 
 sv.mousePos = { x: 0, y: 0 };
 sv.prevMousePos = { x: 0, y: 0 };
-
+//
 async function mySetup() {
   const guiInterface = new dat.GUI();
   guiInterface.add(gui, "angleMult", 0, 100, 0.01);
