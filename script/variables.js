@@ -9,4 +9,5 @@ export const gui = {
   angleMult: 200.5,
   maxTravelDist: 40,
   decaySpeed: 0.1,
+  speed: 0.01,
 };

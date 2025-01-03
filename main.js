@@ -27,12 +27,11 @@ import { render } from "./script/render.js";
 
 sv.mousePos = { x: 0, y: 0 };
 sv.prevMousePos = { x: 0, y: 0 };
-//
+
 async function mySetup() {
   const guiInterface = new dat.GUI();
-  guiInterface.add(gui, "angleMult", 0, 100, 0.01);
-  guiInterface.add(gui, "maxTravelDist", 0, 100, 0.1);
-  guiInterface.add(gui, "decaySpeed", 0.01, 0.1, 0.01);
+  guiInterface.add(gui, "angleMult", 0, 200, 0.1);
+  guiInterface.add(gui, "maxTravelDist", 0, 200, 0.1);
 
   sv.pApp = new Application();
 
@@ -213,7 +212,7 @@ class Triangle {
 
   animate() {
     const angle = (this.id / sv.totalTriangles) * gui.angleMult * Math.PI * 2;
-    this.clock += gui.decaySpeed;
+    this.clock += 0.05;
     const normDist = parseFloat((this.clock % 1.0).toFixed(2));
     const maxDist = gui.maxTravelDist;
     const dist = normDist * maxDist;
