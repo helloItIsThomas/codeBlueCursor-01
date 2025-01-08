@@ -42,6 +42,7 @@ async function mySetup() {
     // backgroundColor: 0x071134,
     backgroundColor: 0x000000,
     resolution: 3,
+    resizeTo: window,
   });
   document.body.appendChild(sv.pApp.canvas);
 
