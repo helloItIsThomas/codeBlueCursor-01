@@ -1,4 +1,5 @@
 import * as dat from "dat.gui";
+import { Triangle } from "./script/Triangle.js";
 
 import {
   Application,
@@ -168,76 +169,3 @@ window.addEventListener("mousemove", (event) => {
   sv.mousePos.x = event.clientX;
   sv.mousePos.y = event.clientY;
 });
-
-class Triangle {
-  constructor(i, x, y, speed) {
-    this.id = i;
-    this.rand = Math.random() * (0.05 - 0.01) + 0.01;
-    this.x = x;
-    this.y = y;
-    this.newPos = { x: 0, y: 0 };
-    this.speed = speed;
-    this.alpha = 0.0;
-    this.active = false;
-    this.origin = {
-      x,
-      y,
-    };
-  }
-
-  make() {
-    console.log("make");
-    this.active = true;
-    this.alpha = 1.0;
-  }
-  destroy() {
-    console.log("destroy");
-    this.active = false;
-    this.alpha = 0.0;
-  }
-
-  animate() {
-    const angle = (this.id / sv.totalTriangles) * gui.angleMult * Math.PI * 2;
-
-    const vel = sv.clock * 50.0;
-
-    this.newPos = {
-      x: Math.cos(angle) * vel + this.origin.x,
-      y: Math.sin(angle) * vel + this.origin.y,
-    };
-
-    // Wrap around the screen edges
-    if (this.newPos.x < 0) {
-      this.newPos.x += sv.pApp.screen.width;
-    } else if (this.newPos.x > sv.pApp.screen.width) {
-      this.newPos.x -= sv.pApp.screen.width;
-    }
-
-    if (this.newPos.y < 0) {
-      this.newPos.y += sv.pApp.screen.height;
-    } else if (this.newPos.y > sv.pApp.screen.height) {
-      this.newPos.y -= sv.pApp.screen.height;
-    }
-
-    this.distance = Math.sqrt(
-      Math.pow(this.newPos.x - sv.mousePos.x, 2) +
-        Math.pow(this.newPos.y - sv.mousePos.y, 2)
-    );
-    this.normalizedDistance =
-      this.distance /
-      Math.sqrt(
-        Math.pow(sv.pApp.screen.width, 2) + Math.pow(sv.pApp.screen.height, 2)
-      );
-
-    if (1.0 - this.normalizedDistance > 0.95) {
-      if (this.active != true) {
-        this.make();
-      }
-    }
-
-    this.alpha = Math.max(0, this.alpha - this.rand);
-    if (this.alpha < 0.2 && this.active == true) {
-      this.destroy();
-    }
-  }
-}

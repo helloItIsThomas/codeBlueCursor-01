@@ -25,8 +25,8 @@ export function render(instancePositionBuffer, alphaBuffer, triangleMesh) {
 
   sv.triangles.forEach((triangle) => {
     triangle.animate();
-    data[triangle.id * 2] = triangle.newPos.x;
-    data[triangle.id * 2 + 1] = triangle.newPos.y;
+    data[triangle.id * 2] = triangle.pos.x;
+    data[triangle.id * 2 + 1] = triangle.pos.y;
     alphaData[triangle.id] = triangle.alpha;
   });
   instancePositionBuffer.update();
