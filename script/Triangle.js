@@ -23,6 +23,7 @@ export class Triangle {
   }
   destroy() {
     this.active = false;
+    //     this.alpha = 0.0;
   }
 
   animate() {
@@ -71,13 +72,13 @@ export class Triangle {
     if (1.0 - this.normalizedDistance > 0.95) {
       if (this.active != true) {
         this.make();
+        console.log("make");
       }
     }
 
-    this.alpha = Math.max(0, this.alpha - this.rand);
-    if (this.alpha < 0.2 && this.active == true) {
+    this.alpha = Math.max(0, this.alpha - sv.clock * 0.0025);
+    if (this.alpha <= 0.2 && this.active == true) {
       this.destroy();
     }
-    //     this.alpha = 1.0;
   }
 }
