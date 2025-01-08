@@ -39,7 +39,8 @@ async function mySetup() {
   await sv.pApp.init({
     width: window.innerWidth,
     height: window.innerHeight,
-    backgroundColor: 0x071134,
+    // backgroundColor: 0x071134,
+    backgroundColor: 0x000000,
     resolution: 3,
   });
   document.body.appendChild(sv.pApp.canvas);
