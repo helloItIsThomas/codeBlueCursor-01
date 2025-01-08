@@ -79,11 +79,11 @@ export class Triangle {
     }
 
     if (this.active == true) {
-      this.clock += 0.005;
+      this.clock += 0.0025;
     }
 
     this.alpha = Math.max(0, this.alpha - this.clock);
-    if (this.alpha <= 0.2 && this.active == true) {
+    if (this.alpha <= 0.0 && this.active == true) {
       this.destroy();
     }
   }
