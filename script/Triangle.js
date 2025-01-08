@@ -78,6 +78,6 @@ export class Triangle {
     if (this.alpha < 0.2 && this.active == true) {
       this.destroy();
     }
-    this.alpha = 1.0;
+    //     this.alpha = 1.0;
   }
 }
