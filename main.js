@@ -63,14 +63,13 @@ async function mySetup() {
   for (let i = 0; i < sv.totalTriangles; i++) {
     sv.triangles[i] = new Triangle(
       i,
-      sv.pApp.screen.width * 0.5,
-      sv.pApp.screen.height * 0.5,
-      // (1 + Math.random() * 20) * 10
-      10
+      Math.random() * sv.pApp.screen.width,
+      Math.random() * sv.pApp.screen.height,
+      Math.random() * 0.05
     );
   }
 
-  const cellW = 15;
+  const cellW = 5;
   const cellH = cellW;
   const geometry = new Geometry({
     topology: "triangle-strip",
@@ -173,16 +172,16 @@ window.addEventListener("mousemove", (event) => {
 class Triangle {
   constructor(i, x, y, speed) {
     this.id = i;
+    this.rand = Math.random() * (0.05 - 0.01) + 0.01;
     this.x = x;
     this.y = y;
     this.newPos = { x: 0, y: 0 };
     this.speed = speed;
     this.alpha = 0.0;
     this.active = false;
-    this.clock = 0;
     this.origin = {
-      x: sv.pApp.screen.width * 0.5,
-      y: sv.pApp.screen.height * 0.5,
+      x,
+      y,
     };
   }
 
@@ -190,43 +189,54 @@ class Triangle {
     console.log("make");
     this.active = true;
     this.alpha = 1.0;
-    this.origin = {
-      x: sv.mousePos.x,
-      y: sv.mousePos.y,
-    };
-    this.newPos = {
-      x: sv.mousePos.x,
-      y: sv.mousePos.y,
-    };
   }
   destroy() {
-    // console.log("destroy");
+    console.log("destroy");
     this.active = false;
     this.alpha = 0.0;
-    this.clock = 0;
-    this.newPos = {
-      x: sv.pApp.screen.width * 0.5,
-      y: sv.pApp.screen.height * 0.5,
-    };
   }
 
   animate() {
     const angle = (this.id / sv.totalTriangles) * gui.angleMult * Math.PI * 2;
-    this.clock += 0.05;
-    const normDist = parseFloat((this.clock % 1.0).toFixed(2));
-    const maxDist = gui.maxTravelDist;
-    const dist = normDist * maxDist;
 
-    // this.alpha = this.alpha + (normDist - this.alpha) * 0.1; // Lerp from current alpha to normDist
-    this.alpha = 1 - normDist;
-    if (this.id == 1) console.log(this.alpha);
+    const vel = sv.clock * 50.0;
 
     this.newPos = {
-      x: Math.cos(angle) * dist + this.origin.x,
-      y: Math.sin(angle) * dist + this.origin.y,
+      x: Math.cos(angle) * vel + this.origin.x,
+      y: Math.sin(angle) * vel + this.origin.y,
     };
 
-    if (normDist === 0) {
+    // Wrap around the screen edges
+    if (this.newPos.x < 0) {
+      this.newPos.x += sv.pApp.screen.width;
+    } else if (this.newPos.x > sv.pApp.screen.width) {
+      this.newPos.x -= sv.pApp.screen.width;
+    }
+
+    if (this.newPos.y < 0) {
+      this.newPos.y += sv.pApp.screen.height;
+    } else if (this.newPos.y > sv.pApp.screen.height) {
+      this.newPos.y -= sv.pApp.screen.height;
+    }
+
+    this.distance = Math.sqrt(
+      Math.pow(this.newPos.x - sv.mousePos.x, 2) +
+        Math.pow(this.newPos.y - sv.mousePos.y, 2)
+    );
+    this.normalizedDistance =
+      this.distance /
+      Math.sqrt(
+        Math.pow(sv.pApp.screen.width, 2) + Math.pow(sv.pApp.screen.height, 2)
+      );
+
+    if (1.0 - this.normalizedDistance > 0.95) {
+      if (this.active != true) {
+        this.make();
+      }
+    }
+
+    this.alpha = Math.max(0, this.alpha - this.rand);
+    if (this.alpha < 0.2 && this.active == true) {
       this.destroy();
     }
   }

@@ -24,30 +24,14 @@ export function render(instancePositionBuffer, alphaBuffer, triangleMesh) {
   triangleMesh.shader.resources.waveUniforms.uniforms.mousePos = normMousePos;
 
   sv.triangles.forEach((triangle) => {
-    if (triangle.active) {
-      triangle.animate();
-      data[triangle.id * 2] = triangle.newPos.x;
-      data[triangle.id * 2 + 1] = triangle.newPos.y;
-    }
+    triangle.animate();
+    data[triangle.id * 2] = triangle.newPos.x;
+    data[triangle.id * 2 + 1] = triangle.newPos.y;
     alphaData[triangle.id] = triangle.alpha;
   });
   instancePositionBuffer.update();
   alphaBuffer.update();
 
-  if (mouseVelocity > 5 && sv.mousePos !== sv.prevMousePos) {
-    const triangle = sv.triangles[makeIndex++ % sv.totalTriangles];
-    triangle.make();
-  }
-
   sv.prevMousePos.x = sv.mousePos.x;
   sv.prevMousePos.y = sv.mousePos.y;
 }
-
-// window.addEventListener("load", () => {
-// let index = 0;
-// setInterval(() => {
-// const triangle = sv.triangles[index++ % sv.totalTriangles];
-// if (triangle) triangle.make();
-// }, 25);
-// });
-//
