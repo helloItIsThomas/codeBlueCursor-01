@@ -23,22 +23,21 @@ export class Triangle {
   }
   destroy() {
     this.active = false;
-    //     this.alpha = 0.0;
   }
 
   animate() {
     const angle = (this.id / sv.totalTriangles) * gui.angleMult * Math.PI * 2;
 
-    const vel = sv.clock * 50.0;
+    const vel = sv.clock * 150.0;
 
     this.pos = {
       x: Math.cos(angle) * vel + this.origin.x,
       y: Math.sin(angle) * vel + this.origin.y,
     };
 
-    // Wrap around the screen edges
-    //     this.pos.x = (this.pos.x + sv.pApp.screen.width) % sv.pApp.screen.width;
-    //     this.pos.y = (this.pos.y + sv.pApp.screen.height) % sv.pApp.screen.height;
+    // Correct wrapping logic to ensure dots never leave the scene
+    this.pos.x = (this.pos.x + sv.pApp.screen.width) % sv.pApp.screen.width;
+    this.pos.y = (this.pos.y + sv.pApp.screen.height) % sv.pApp.screen.height;
 
     this.distance = Math.sqrt(
       Math.pow(this.pos.x - sv.mousePos.x, 2) +
@@ -65,8 +64,9 @@ export class Triangle {
       cursorPushDistance *
       (1.0 - this.normalizedDistance);
 
-    this.pos.x = this.pos.x % sv.pApp.screen.width;
-    this.pos.y = this.pos.y % sv.pApp.screen.height;
+    // Reapply wrapping after cursor push
+    this.pos.x = (this.pos.x + sv.pApp.screen.width) % sv.pApp.screen.width;
+    this.pos.y = (this.pos.y + sv.pApp.screen.height) % sv.pApp.screen.height;
 
     if (1.0 - this.normalizedDistance > 0.95) {
       if (this.active != true) {
@@ -78,6 +78,6 @@ export class Triangle {
     if (this.alpha < 0.2 && this.active == true) {
       this.destroy();
     }
-    //     this.alpha = 1.0;
+    this.alpha = 1.0;
   }
 }
