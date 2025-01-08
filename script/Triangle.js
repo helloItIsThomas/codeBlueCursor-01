@@ -23,7 +23,7 @@ export class Triangle {
   }
   destroy() {
     this.active = false;
-    this.alpha = 0.0;
+    //     this.alpha = 0.0;
   }
 
   animate() {
@@ -37,8 +37,8 @@ export class Triangle {
     };
 
     // Wrap around the screen edges
-    this.pos.x = (this.pos.x + sv.pApp.screen.width) % sv.pApp.screen.width;
-    this.pos.y = (this.pos.y + sv.pApp.screen.height) % sv.pApp.screen.height;
+    //     this.pos.x = (this.pos.x + sv.pApp.screen.width) % sv.pApp.screen.width;
+    //     this.pos.y = (this.pos.y + sv.pApp.screen.height) % sv.pApp.screen.height;
 
     this.distance = Math.sqrt(
       Math.pow(this.pos.x - sv.mousePos.x, 2) +
@@ -65,6 +65,9 @@ export class Triangle {
       cursorPushDistance *
       (1.0 - this.normalizedDistance);
 
+    this.pos.x = this.pos.x % sv.pApp.screen.width;
+    this.pos.y = this.pos.y % sv.pApp.screen.height;
+
     if (1.0 - this.normalizedDistance > 0.95) {
       if (this.active != true) {
         this.make();
@@ -75,5 +78,6 @@ export class Triangle {
     if (this.alpha < 0.2 && this.active == true) {
       this.destroy();
     }
+    //     this.alpha = 1.0;
   }
 }
