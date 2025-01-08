@@ -9,6 +9,7 @@ export class Triangle {
     this.y = y;
     this.pos = { x: 0, y: 0 };
     this.speed = speed;
+    this.clock = 0;
     this.alpha = 0.0;
     this.active = false;
     this.origin = {
@@ -23,6 +24,7 @@ export class Triangle {
   }
   destroy() {
     this.active = false;
+    this.clock = 0.0;
     //     this.alpha = 0.0;
   }
 
@@ -76,7 +78,11 @@ export class Triangle {
       }
     }
 
-    this.alpha = Math.max(0, this.alpha - sv.clock * 0.0025);
+    if (this.active == true) {
+      this.clock += 0.005;
+    }
+
+    this.alpha = Math.max(0, this.alpha - this.clock);
     if (this.alpha <= 0.2 && this.active == true) {
       this.destroy();
     }
