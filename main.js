@@ -29,9 +29,9 @@ sv.mousePos = { x: 0, y: 0 };
 sv.prevMousePos = { x: 0, y: 0 };
 
 async function mySetup() {
-  const guiInterface = new dat.GUI();
-  guiInterface.add(gui, "angleMult", 0, 200, 0.1);
-  guiInterface.add(gui, "maxTravelDist", 0, 200, 0.1);
+  // const guiInterface = new dat.GUI();
+  // guiInterface.add(gui, "angleMult", 0, 200, 0.1);
+  // guiInterface.add(gui, "maxTravelDist", 0, 200, 0.1);
 
   sv.pApp = new Application();
 
