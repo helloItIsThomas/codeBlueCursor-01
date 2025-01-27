@@ -140,7 +140,7 @@ async function mySetup() {
       color: 0x64f0f5,
       distance: 1,
       innerStrength: 0,
-      outerStrength: 2.0,
+      outerStrength: 5.0,
     }),
     // new ConvolutionFilter({
     // matrix: [0, 1, 0, 1, -2, 1, -0.5, 2, 0],

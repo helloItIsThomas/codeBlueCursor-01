@@ -25,7 +25,6 @@ export class Triangle {
   destroy() {
     this.active = false;
     this.clock = 0.0;
-    //     this.alpha = 0.0;
   }
 
   animate() {
