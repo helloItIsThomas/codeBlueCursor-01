@@ -2,7 +2,9 @@ export const sv = {
   pApp: null,
   clock: 0,
   triangles: [],
-  totalTriangles: 200, // Math.floor(document.body.clientWidth / 10),
+  totalTriangles: 200,
+  mousePos: { x: 0, y: 0 },
+  prevMousePos: { x: 0, y: 0 },
 };
 
 export const gui = {

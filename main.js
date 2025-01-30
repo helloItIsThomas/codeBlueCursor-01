@@ -50,7 +50,6 @@ async function mySetup() {
 
   const { vertex, fragment } = await loadShaders();
 
-  // need a buffer big enough to store x, y of sv.totalTriangles
   const instancePositionBuffer = new Buffer({
     data: new Float32Array(sv.totalTriangles * 2),
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
@@ -72,7 +71,7 @@ async function mySetup() {
     );
   }
 
-  const cellW = 5;
+  const cellW = 2;
   const cellH = cellW;
   const geometry = new Geometry({
     topology: "triangle-strip",
@@ -99,6 +98,13 @@ async function mySetup() {
       },
       aAlpha: {
         buffer: alphaBuffer,
+        instance: true,
+      },
+      aSize: {
+        buffer: new Buffer({
+          data: new Float32Array(sv.triangles.map(t => t.size)),
+          usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
+        }),
         instance: true,
       },
     },
