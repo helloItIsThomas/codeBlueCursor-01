@@ -102,7 +102,7 @@ async function mySetup() {
       },
       aSize: {
         buffer: new Buffer({
-          data: new Float32Array(sv.triangles.map(t => t.size)),
+          data: new Float32Array(sv.triangles.map((t) => t.size)),
           usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
         }),
         instance: true,

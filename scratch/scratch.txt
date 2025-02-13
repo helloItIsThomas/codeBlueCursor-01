@@ -1,5 +1,4 @@
 
-
 we have a total triangle count.
 each triangle moves outward from the origin.
 the origin is the mouse position.

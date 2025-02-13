@@ -14,7 +14,7 @@ export class Triangle {
     this.active = false;
     this.origin = { x, y };
     this.maxRadius = 100;
-    this.fadeSpeed = Math.random() * 0.01 + 0.005;
+    this.fadeSpeed = Math.random() * 0.005 + 0.005;
     this.size = Math.random() * 0.5 + 0.5;
   }
 
@@ -41,7 +41,7 @@ export class Triangle {
       return;
     }
 
-    const angleJitter = Math.sin(this.clock * 10) * 0.2;
+    const angleJitter = Math.sin(this.clock * 10) * 0.02;
     const angle = this.initialAngle + angleJitter;
     const vel = Math.pow(this.clock, 0.7) * 60.0;
 
@@ -52,7 +52,7 @@ export class Triangle {
 
     const distFromOrigin = Math.sqrt(
       Math.pow(this.pos.x - this.origin.x, 2) +
-      Math.pow(this.pos.y - this.origin.y, 2)
+        Math.pow(this.pos.y - this.origin.y, 2)
     );
 
     if (distFromOrigin > this.maxRadius) {
@@ -62,10 +62,11 @@ export class Triangle {
 
     const fadeStart = this.maxRadius * 0.3;
     if (distFromOrigin > fadeStart) {
-      const fadeFactor = 1 - ((distFromOrigin - fadeStart) / (this.maxRadius - fadeStart));
-      this.alpha = Math.max(0, fadeFactor * Math.exp(-this.clock * 2));
+      const fadeFactor =
+        1 - (distFromOrigin - fadeStart) / (this.maxRadius - fadeStart);
+      this.alpha = Math.max(0, fadeFactor * Math.exp(-this.clock * 20));
     } else {
-      this.alpha = Math.exp(-this.clock * 2);
+      this.alpha = Math.exp(-this.clock * 20);
     }
 
     if (this.active) {
